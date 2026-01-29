@@ -7,6 +7,7 @@ const evenNumberBank = [];
 //          and the updated bank is displayed
 function addNumber(number) {
   userNumberBank.push(number);
+  console.log("adding a number");
   render();
 }
 
@@ -17,6 +18,8 @@ function sort1() {
   if (userNumberBank.length === 0) return;
 
   const firstNumber = userNumberBank.shift();
+
+  console.log("sort 1 button clicked");
   if (firstNumber % 2 === 0) {
     evenNumberBank.push(firstNumber);
     evenNumberBank.sort();
@@ -24,6 +27,9 @@ function sort1() {
     oddNumberBankNumberBank.push(firstNumber);
     oddNumberBankNumberBank.sort();
   }
+  console.log(
+    `userNumberBank: ${userNumberBank} oddNumberBank: ${oddNumberBank}  evenNumberBank:${evenNumberBank}`,
+  );
   render();
 }
 
@@ -48,9 +54,19 @@ function InputForm() {
   `;
   $form.addEventListener("submit", (event) => {
     event.preventDefault;
-
-    const data = Number(new FormData($form));
+    const clickedButtonValue = event.submitter.value;
+    console.log(`clickedButtonValue: ${clickedButtonValue}`);
+    if ((clickedButtonValue = "addNumber")) {
+      // assuming number is entered
+      const formNumber = Number(new FormData($form));
+      addNumber(formNumber);
+    } else if ((clickedButtonValue = "sort1")) {
+      sort1();
+    } else if ((clickedButtonValue = "sortAll")) {
+      sortAll();
+    }
   });
+  return $form;
 }
 // Displays the 'bank' (list) of the numbers they've entered
 // Provides a button to add the number they enter
@@ -64,5 +80,8 @@ function render() {
   const $app = document.querySelector("#app");
   $app.innerHTML = `
   <h1>Odds and Events</h1>
+  <InputForm></InputForm>
   `;
+  $app.querySelector("InputForm").replaceWith(InputForm());
 }
+render();
